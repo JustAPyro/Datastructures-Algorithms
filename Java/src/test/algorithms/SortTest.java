@@ -63,9 +63,12 @@ public class SortTest {
         copy(backwards, testBackwards);
     }
 
-    private boolean sorted(Integer[][] arrays) {
-        for (int i = 0; i < arrays.length; i++) {
-            for (int j = 0; j < arrays[i].length; j++) {
+    private boolean sorted(Integer[][] arrays)
+    {
+        for (int i = 0; i < arrays.length; i++)
+        {
+            for (int j = 0; j < arrays[i].length; j++)
+            {
                 if (!arrays[i][j].equals(sorted[i][j])) return false;
             }
         }
@@ -73,7 +76,8 @@ public class SortTest {
     }
 
     @Test
-    public void insertionSortTest() {
+    public void insertionSortTest()
+    {
 
         // Setup (Copy test arrays)
         copyAll();
@@ -88,6 +92,37 @@ public class SortTest {
         assertTrue(sorted(testSorted));
         assertTrue(sorted(testBackwards));
     }
+
+    @Test
+    public void bubbleSortTest()
+    {
+        // Setup
+        copyAll();
+
+        for (Integer[] arr : testSorted) Sort.bubble(arr);
+        for (Integer[] arr : testRandom) Sort.bubble(arr);
+        for (Integer[] arr : testBackwards) Sort.bubble(arr);
+    }
+
+    @Test
+    public void mergeSortTest()
+    {
+
+        // Setup
+        copyAll();
+
+        // Execute
+        for (Integer[] arr : testSorted) Sort.merge(arr);
+        for (Integer[] arr : testRandom) Sort.merge(arr);
+        for (Integer[] arr : testBackwards) Sort.merge(arr);
+
+        // Assert
+        assertTrue(sorted(testRandom));
+        assertTrue(sorted(testSorted));
+        assertTrue(sorted(testBackwards));
+
+    }
+
 
 
 }
