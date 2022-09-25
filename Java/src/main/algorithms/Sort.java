@@ -1,5 +1,7 @@
 package main.algorithms;
 
+import java.util.Arrays;
+
 public class Sort
 {
 
@@ -69,5 +71,76 @@ public class Sort
             input[j + 1] = key;
         }
     }
+
+    public static <T> void bubble(Comparable<T>[] input)
+    {
+        for (int i = 0; i < input.length; i++)
+        {
+            for (int j = input.length-1; j > i; j--)
+            {
+                if (input[j].compareTo((T) input[j-1]) < 0)
+                {
+                    Comparable<T> temp = input[j];
+                    input[j] = input[j-1];
+                    input[j-1] = temp;
+                }
+            }
+        }
+    }
+
+    // TODO: Implement merge sort with comparable interface
+    public static void merge(Integer[] input)
+    {
+        mergeSort(input, 0, input.length-1);
+    }
+
+    private static void mergeSort(Integer[] input, int start, int end)
+    {
+        if (start >= end)
+            return;
+
+        int mid = (start + end) / 2;
+        mergeSort(input, start, mid);
+        mergeSort(input, mid+1, end);
+
+        mergeSeg(input, start, mid, end);
+    }
+    private static void mergeSeg(Integer[] input, int left, int mid, int right)
+    {
+        // Create two new arrays that are each about half the input array
+        Integer[] leftArr = new Integer[mid - left + 1];
+        Integer[] rightArr = new Integer[right - mid];
+
+        // Copy the left and right of the input array into the newly created leftArr and rightArr
+        System.arraycopy(input, left, leftArr, 0, leftArr.length);
+        System.arraycopy(input, mid+1, rightArr, 0, rightArr.length);
+
+        // Create some counters to track as we re-merge into original array
+        int smallestLeft = 0;
+        int smallestRight = 0;
+        int fillLocation = left;
+
+        while (smallestLeft < leftArr.length && smallestRight < rightArr.length)
+        {
+            // If the smallest element in the left array is less or equal to smallest from right array
+            if (leftArr[smallestLeft] <= rightArr[smallestRight])
+            {
+                    input[fillLocation] = leftArr[smallestLeft];
+                    smallestLeft++;
+            }
+            else
+            {
+                input[fillLocation] = rightArr[smallestRight];
+                smallestRight++;
+            }
+            fillLocation++;
+        }
+
+        // Now that we've emptied one list, copy whatever list is remaining (Since that should all be sorted)
+        while (smallestLeft < leftArr.length) { input[fillLocation] = leftArr[smallestLeft]; smallestLeft++; fillLocation++; }
+        while (smallestRight < rightArr.length) { input[fillLocation] = rightArr[smallestRight]; smallestRight++; fillLocation++; }
+    }
+
+
 
 }
