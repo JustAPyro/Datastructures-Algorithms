@@ -141,6 +141,69 @@ public class Sort
         while (smallestRight < rightArr.length) { input[fillLocation] = rightArr[smallestRight]; smallestRight++; fillLocation++; }
     }
 
+    //////////////////// HEAP-SORT
+
+    public static void heap(Integer[] input)
+    {
+        buildMaxHeap(input);
+        for (int i = input.length-1; i >= 2; i--)
+        {
+            int temp = input[1];
+            input[1] = input[i];
+            input[i] = temp;
 
 
+
+        }
+    }
+
+    private static int parent(int i)
+    {
+        return i/2;
+    }
+
+    private static int left(int i)
+    {
+        return i*2;
+    }
+
+    private static int right(int i)
+    {
+        return i*2 + 1;
+    }
+
+    private static void maxHeapify(Integer[] arr, int i)
+    {
+        int l = left(i);
+        int r = right(i);
+        int largest = 0;
+        if (l < arr.length && arr[l] > arr[i])
+        {
+            largest = l;
+        }
+        else
+        {
+            largest = i;
+        }
+
+        if (r < arr.length && arr[r] > arr[largest])
+        {
+            largest = r;
+        }
+        if (largest != i)
+        {
+            int temp = arr[i];
+            arr[i] = arr[largest];
+            arr[largest] = temp;
+            maxHeapify(arr, largest);
+        }
+    }
+
+    private static void buildMaxHeap(Integer[] arr)
+    {
+        for (int i = arr.length/2; i >= 0; i--)
+        {
+            maxHeapify(arr, i);
+        }
+    }
 }
